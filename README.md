@@ -46,7 +46,9 @@ Example of `config.json` structure:
 
 Run **trayBat**:
 
-```python trayBat.py```
+```
+python trayBat.py
+```
 
 The application will add an icon to the system tray, where you can select and run the desired `.bat` file.
 
@@ -57,5 +59,5 @@ Python 3.7 or higher<br/>
 wxPython<br/>
 Support and Contributions<br/><br/>
 
-**License**<br/>
+## License
 This project is licensed under the MIT License.
