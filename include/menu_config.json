@@ -1,0 +1,51 @@
+{
+	"items": [
+			{
+					"type": "item",
+					"label": "Option 1",
+					"file": "empty.bat"
+			},
+			{
+					"type": "item",
+					"label": "Option 2",
+					"file": "empty.bat"
+			},
+			{
+					"type": "item",
+					"label": "Option 3",
+					"file": "empty.bat"
+			}
+	],
+	"sections": [
+			{
+					"name": "Group 1",
+					"items": [
+							{
+									"type": "item",
+									"label": "Option 1",
+									"file": "empty.bat"
+							},
+							{
+									"type": "item",
+									"label": "Option 2",
+									"file": "empty.bat"
+							}
+					]
+			},
+			{
+					"name": "Group 2",
+					"items": [
+							{
+									"type": "item",
+									"label": "Option 1",
+									"file": "empty.bat"
+							},
+							{
+									"type": "item",
+									"label": "Option 2",
+									"file": "empty.bat"
+							}
+					]
+			}
+	]
+}
