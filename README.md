@@ -32,14 +32,57 @@ Example of `config.json` structure:
 
 ```
 {
-    "Group1": [
-        {"name": "Script 1", "path": "include/script1.bat"},
-        {"name": "Script 2", "path": "include/script2.bat"}
-    ],
-    "Group2": [
-        {"name": "Script 3", "path": "include/script3.bat"}
-    ]
+    "items": [
+		{
+			"type": "item",
+			"label": "Option 1",
+			"file": "empty.bat"
+		},
+		{
+			"type": "item",
+			"label": "Option 2",
+			"file": "empty.bat"
+		},
+		{
+			"type": "item",
+			"label": "Option 3",
+			"file": "empty.bat"
+		}
+	],
+	"sections": [
+		{
+			"name": "Group 1",
+			"items": [
+				{
+					"type": "item",
+					"label": "Option 1",
+					"file": "empty.bat"
+				},
+				{
+					"type": "item",
+					"label": "Option 2",
+					"file": "empty.bat"
+				}
+			]
+		},
+		{
+			"name": "Group 2",
+			"items": [
+				{
+					"type": "item",
+					"label": "Option 1",
+					"file": "empty.bat"
+				},
+				{
+					"type": "item",
+					"label": "Option 2",
+					"file": "empty.bat"
+				}
+			]
+		}
+	]
 }
+
 ```
 
 4. **Running the application**:
