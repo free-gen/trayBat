@@ -47,7 +47,7 @@ Example of `menu_config.xml` structure:
 </menu>
 ```
 *If your bat files are stored in folders, then the paths should be specified using* `\`.<br/>
-Example:
+*Example:*
 ```
 file="include\Your Folder\Your Script.bat"
 ```
