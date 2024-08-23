@@ -15,7 +15,6 @@
 1. **Clone the repository**:
 ```
 git clone https://github.com/free-gen/trayBat.git
-cd trayBat
 ```
 
 2. **Install dependencies**:
