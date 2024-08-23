@@ -14,6 +14,9 @@ class TrayApp(wx.adv.TaskBarIcon):
         self.light_icon_path = "src/icon_light.png"
         self.dark_icon_path = "src/icon_dark.png"
 
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(script_dir)
+
         self.update_icon()
 
         self.Bind(wx.adv.EVT_TASKBAR_RIGHT_UP, self.on_right_click)
@@ -73,7 +76,6 @@ class TrayApp(wx.adv.TaskBarIcon):
             tree = ET.parse(config_file)
             root = tree.getroot()
 
-            # Обработка элементов меню
             for element in root:
                 if element.tag == 'item':
                     label = element.attrib['label']
