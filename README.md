@@ -30,6 +30,9 @@ Edit `menu_config.xml` to specify the paths to your `.bat` files and their group
 Example of `menu_config.xml` structure:
 
 ```
+<!-- If your bat files are stored in folders, then the paths should be specified using "\" -->
+<!-- Example -->
+<!-- file="include\Your Folder\Your Script.bat" -->
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
 	<item label="Option 1" file="empty.bat" />
@@ -45,6 +48,11 @@ Example of `menu_config.xml` structure:
 		<item label="Option 2" file="group 2\empty.bat" />
 	</section>
 </menu>
+```
+**If your bat files are stored in folders, then the paths should be specified using `\`.**<br/>
+Example:
+```
+file="include\Your Folder\Your Script.bat"
 ```
 
 4. **Running the application**:
