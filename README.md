@@ -38,12 +38,12 @@ Example of `menu_config.xml` structure:
 	<item label="Option 3" file="empty.bat" />
 	<separator />
 	<section name="Group 1">
-		<item label="Option 1" file="empty.bat" />
-		<item label="Option 2" file="empty.bat" />
+		<item label="Option 1" file="group 1\empty.bat" />
+		<item label="Option 2" file="group 1\empty.bat" />
 	</section>
 	<section name="Group 2">
-		<item label="Option 1" file="empty.bat" />
-		<item label="Option 2" file="empty.bat" />
+		<item label="Option 1" file="group 2\empty.bat" />
+		<item label="Option 2" file="group 2\empty.bat" />
 	</section>
 </menu>
 ```
