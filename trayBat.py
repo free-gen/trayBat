@@ -3,14 +3,14 @@ import wx.adv
 import os
 import ctypes
 import webbrowser
-import json
+import xml.etree.ElementTree as ET
 
 class TrayApp(wx.adv.TaskBarIcon):
     def __init__(self):
         super(TrayApp, self).__init__()
 
         self.app_name = "trayBat"
-        self.app_version = "1.0"
+        self.app_version = "1.0.1"
         self.light_icon_path = "src/icon_light.png"
         self.dark_icon_path = "src/icon_dark.png"
 
@@ -26,7 +26,6 @@ class TrayApp(wx.adv.TaskBarIcon):
     def update_icon(self):
         dark_mode = self.is_dark_mode()
         icon_path = self.dark_icon_path if dark_mode else self.light_icon_path
-
         icon = wx.Icon(icon_path)
         self.SetIcon(icon, f"{self.app_name}")
 
@@ -34,12 +33,12 @@ class TrayApp(wx.adv.TaskBarIcon):
         menu = wx.Menu()
         about_action1 = menu.Append(wx.ID_ANY, f"{self.app_name} ver. {self.app_version}")
         about_action1.Enable(False)
-
+        
         about_action2 = menu.Append(wx.ID_ANY, "Assembled by freegen")
         self.Bind(wx.EVT_MENU, self.open_website, about_action2)
-
+        
         menu.AppendSeparator()
-
+        
         quit_action = menu.Append(wx.ID_EXIT, "Exit")
         self.Bind(wx.EVT_MENU, self.quit, quit_action)
 
@@ -48,7 +47,7 @@ class TrayApp(wx.adv.TaskBarIcon):
 
     def on_left_click(self, event):
         menu = wx.Menu()
-        self.load_bat_files(menu)
+        self.load_menu_from_config(menu)
         self.PopupMenu(menu)
         menu.Destroy()
 
@@ -64,63 +63,47 @@ class TrayApp(wx.adv.TaskBarIcon):
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize") as key:
                 value, _ = winreg.QueryValueEx(key, "SystemUsesLightTheme")
                 return value == 0
-        except Exception:
+        except Exception as e:
             return False
 
-    def load_menu_config(self, config_path):
-        with open(config_path, 'r') as file:
-            return json.load(file)
-
-    def load_bat_files(self, menu):
-        config_path = os.path.join(os.getcwd(), 'include', 'menu_config.json')
-        if not os.path.exists(config_path):
-            print(f"Config file not found: {config_path}")
-            return
+    def load_menu_from_config(self, menu):
+        config_file = os.path.join('include', 'menu_config.xml')
         
-        config = self.load_menu_config(config_path)
-        bat_folder = os.path.join(os.getcwd(), 'include')
+        try:
+            tree = ET.parse(config_file)
+            root = tree.getroot()
 
-        if not os.path.exists(bat_folder):
-            print(f"Directory 'include' does not exist at path: {bat_folder}")
-            return
+            # Обработка элементов меню
+            for element in root:
+                if element.tag == 'item':
+                    label = element.attrib['label']
+                    file = element.attrib['file']
+                    action = menu.Append(wx.ID_ANY, label)
+                    self.Bind(wx.EVT_MENU, lambda evt, file_path=file: self.run_bat_file(file_path), action)
+                elif element.tag == 'separator':
+                    menu.AppendSeparator()
+                elif element.tag == 'section':
+                    section_name = element.attrib['name']
+                    submenu = wx.Menu()
+                    for item in element:
+                        if item.tag == 'item':
+                            label = item.attrib['label']
+                            file = item.attrib['file']
+                            action = submenu.Append(wx.ID_ANY, label)
+                            self.Bind(wx.EVT_MENU, lambda evt, file_path=file: self.run_bat_file(file_path), action)
+                        elif item.tag == 'separator':
+                            submenu.AppendSeparator()
+                    menu.AppendSubMenu(submenu, section_name)
 
-        for item in config.get("items", []):
-            if item["type"] == "item":
-                action_text = item.get("label", "")
-                bat_file_name = item.get("file", "")
-                bat_file_path = os.path.join(bat_folder, bat_file_name)
-                
-                if os.path.exists(bat_file_path):
-                    action = menu.Append(wx.ID_ANY, action_text)
-                    self.Bind(wx.EVT_MENU, lambda evt, file=bat_file_path: self.run_bat_file(file), action)
-                else:
-                    print(f"Batch file not found: {bat_file_path}")
-
-        for section in config.get("sections", []):
-            section_name = section.get("name", "")
-            section_menu = wx.Menu()
-            for item in section.get("items", []):
-                if item["type"] == "item":
-                    action_text = item.get("label", "")
-                    bat_file_name = item.get("file", "")
-                    bat_file_path = os.path.join(bat_folder, bat_file_name)
-                    
-                    if os.path.exists(bat_file_path):
-                        action = section_menu.Append(wx.ID_ANY, action_text)
-                        self.Bind(wx.EVT_MENU, lambda evt, file=bat_file_path: self.run_bat_file(file), action)
-                    else:
-                        print(f"Batch file not found: {bat_file_path}")
-            if section_menu.GetMenuItemCount() > 0:
-                menu.AppendSubMenu(section_menu, section_name)
+        except Exception as e:
+            print(f"Error loading menu config: {e}")
 
     def run_bat_file(self, bat_file):
         if os.path.exists(bat_file):
             ctypes.windll.shell32.ShellExecuteW(None, "runas", bat_file, None, None, 0)
-        else:
-            print(f"Batch file not found: {bat_file}")
 
     def open_website(self, event):
-        webbrowser.open("https://github.com/free-gen/traybat")
+        webbrowser.open("https://free-gen.github.io")
 
     def quit(self, event):
         wx.CallAfter(self.Destroy)
