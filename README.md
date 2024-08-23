@@ -7,8 +7,8 @@
 ## Key Features
 
 - **Easy Access**: All your `.bat` files are always at hand via the system tray menu.
-- **Flexible Configuration**: You can create and group your own `.bat` file list using a simple `JSON` format.
-- **Easy Integration**: To add new scripts, simply place them in the `include` folder and update the corresponding `JSON` file.
+- **Flexible Configuration**: You can create and group your own `.bat` file list using a simple `XML` format.
+- **Easy Integration**: To add new scripts, simply place them in the `include` folder and update the corresponding `XML` file.
 
 ## Installation and Usage
 
@@ -27,62 +27,25 @@ pip install wxPython
 3. **Configure**:
 
 Put your `.bat` files in the `include` folder.
-Edit `config.json` to specify the paths to your `.bat` files and their grouping.
-Example of `config.json` structure:
+Edit `menu_config.xml` to specify the paths to your `.bat` files and their grouping.
+Example of `menu_config.xml` structure:
 
 ```
-{
-    "items": [
-		{
-			"type": "item",
-			"label": "Option 1",
-			"file": "empty.bat"
-		},
-		{
-			"type": "item",
-			"label": "Option 2",
-			"file": "empty.bat"
-		},
-		{
-			"type": "item",
-			"label": "Option 3",
-			"file": "empty.bat"
-		}
-	],
-	"sections": [
-		{
-			"name": "Group 1",
-			"items": [
-				{
-					"type": "item",
-					"label": "Option 1",
-					"file": "empty.bat"
-				},
-				{
-					"type": "item",
-					"label": "Option 2",
-					"file": "empty.bat"
-				}
-			]
-		},
-		{
-			"name": "Group 2",
-			"items": [
-				{
-					"type": "item",
-					"label": "Option 1",
-					"file": "empty.bat"
-				},
-				{
-					"type": "item",
-					"label": "Option 2",
-					"file": "empty.bat"
-				}
-			]
-		}
-	]
-}
-
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+	<item label="Option 1" file="empty.bat" />
+	<item label="Option 2" file="empty.bat" />
+	<item label="Option 3" file="empty.bat" />
+	<separator />
+	<section name="Group 1">
+		<item label="Option 1" file="empty.bat" />
+		<item label="Option 2" file="empty.bat" />
+	</section>
+	<section name="Group 2">
+		<item label="Option 1" file="empty.bat" />
+		<item label="Option 2" file="empty.bat" />
+	</section>
+</menu>
 ```
 
 4. **Running the application**:
