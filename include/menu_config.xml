@@ -1,4 +1,7 @@
 <!-- If your bat files are stored in folders, then the paths should be specified using "\" -->
+<!-- Example -->
+<!-- file="include\Your Folder\Your Script.bat" -->
+
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
 	<item label="Option 1" file="empty.bat" />
