@@ -105,7 +105,7 @@ class TrayApp(wx.adv.TaskBarIcon):
             ctypes.windll.shell32.ShellExecuteW(None, "runas", bat_file, None, None, 0)
 
     def open_website(self, event):
-        webbrowser.open("https://free-gen.github.io")
+        webbrowser.open("https://github.com/free-gen/trayBat")
 
     def quit(self, event):
         wx.CallAfter(self.Destroy)
